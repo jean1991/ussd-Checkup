@@ -75,9 +75,12 @@ else{
                 //if patient exist
                 if($message==$patient[$id]['name']){
                    // proceed
+                    $response = "those are you exams details".sendOutput($response,2);
 
 
-
+                }
+                else{
+                    $response = gethealservicemenu($message);
                 }
 
             }else{
