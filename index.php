@@ -19,7 +19,10 @@ switch (strtolower($level)) {
         $response = gethealservicemenu($message);
         break;
     case 2:
-        $response = getLevelOneMenu($message);
+        $response = gethealservicemenu1($message);
+        break;
+    case 3:
+        $response = verifyPatient($message,$patient);
         break;
     default:
         $response = getHomeMenu();
@@ -42,8 +45,8 @@ $input = getInput();
 
 if ( $input['text'] == "" ) {
     // This is the first request.
-    $response  = "Nairobi hospital+".PHP_EOL;
-    $response .= "Health service";
+    $response  = "1. Nairobi hospital+".PHP_EOL;
+    $response .= "2. Health service";
     sendOutput($response,1);
 }
 // This is the second first request.
@@ -116,18 +119,67 @@ function getLevelOneMenu($text){
 
 }
 function getHomeMenu(){
-    $response  = "Nairobi hospital+".PHP_EOL;
-    $response .= "Health service";
+    $response  = "1. Nairobi hospital+".PHP_EOL;
+    $response .= "2. Health service";
 
     return $response;
 }
-function gethealservicemenu(){
+function gethealservicemenu($message){
+
+    switch ($message){
+        case 1:
+           $response = getNairobiHospital();
+            break;
+        case 2:
+            $response = getHealthServices();
+            break;
+        default:
+            $response = "We could not understand your response";
+            break;
+    }
+    return $response;
+}
+function getNairobiHospital(){
+
+}
+function getHealthServices(){
 
     $response  = "1. CHEK-UP RESULT".PHP_EOL;
     $response .= "2. Book for a Checkup";
     return $response;
+
+}
+function gethealservicemenu1($id){
+
+    $response  = "1. Enter your ID".PHP_EOL;
+    sendOutput($response,1);
+
 }
 
+function verifyPatient($text,$patient){
+    if(!empty($text)){
+
+        $message= "Mr/Ms".$patient[$text]['name'];
+        //if patient exist
+        if($message==$patient[$text]['name']){
+            // proceed
+            $response = "those are you exams details".$message;
+                sendOutput($response,2);
+
+
+        }
+        /* else{
+             $response = gethealservicemenu($message);
+         }*/
+
+    }else{
+        $response =  "You are a not yet reigisted at Nairobi hospital please contact  the registration office";
+    }
+
+    //$response .= "2. Exit";
+    sendOutput($response,2);
+
+}
 //verify if the id belongs to one of the staff members
 /*function getInput(){
     $input = array();
