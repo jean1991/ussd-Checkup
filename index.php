@@ -140,7 +140,7 @@ function gethealservicemenu($message){
     return $response;
 }
 function getNairobiHospital(){
-
+    getHealthServices();
 }
 function getHealthServices(){
 
@@ -149,15 +149,15 @@ function getHealthServices(){
     return $response;
 
 }
-function gethealservicemenu1($id){
+function gethealservicemenu1(){
 
     $response  = "1. Enter your ID".PHP_EOL;
     sendOutput($response,1);
 
 }
 
-function verifyPatient($text,$patient){
-    if(!empty($text)){
+function verifyPatient($text,$patient,$input){
+    /*if(!empty($text)){
 
         $message= "Mr/Ms".$patient[$text]['name'];
         //if patient exist
@@ -170,14 +170,37 @@ function verifyPatient($text,$patient){
         }
         /* else{
              $response = gethealservicemenu($message);
-         }*/
+         }
 
     }else{
         $response =  "You are a not yet reigisted at Nairobi hospital please contact  the registration office";
-    }
+    }/
 
     //$response .= "2. Exit";
-    sendOutput($response,2);
+    sendOutput($response,2);*/
+if ( $input['text'] == "" ) {
+    // This is the first request. Note how we start the response with CON
+    $response  = "Enter your  ID please!!!";
+    sendOutput($response,1);
+}else{
+    //receive what Edwin has sent in as text
+    $text = $input['text'];
+
+
+    $patient1 = array('name'=>'JAMES', 'staff_id' => 1234);
+
+    $patient2 = array('name'=>'LEWIS', 'staff_id' => 12345);
+
+    $patient3 = array('name'=>'CHARLES', 'staff_id' => 231);
+
+    $patient = array('1234'=>$patient1,'12345'=>$patient2,'231'=>$patient3);
+
+    if(!empty($patient[$text])){
+        $message= "ID is valid and it belongs to ".$patient[$text]['name'];
+
+    }else{
+        $message =  "No patient with that id";
+    }
 
 }
 //verify if the id belongs to one of the staff members
@@ -190,9 +213,10 @@ function verifyPatient($text,$patient){
 
     return $input;
 
-}*/
+}*/}
 function getLevel($text){
-    if($text == ""){
+    if($text == "")
+    {
         $response['level'] = 0;
     }else{
         $exploded_text = explode('*',$text);
@@ -214,5 +238,4 @@ function getLevel($text){
     }
     exit;
 }*/
-
 ?>
